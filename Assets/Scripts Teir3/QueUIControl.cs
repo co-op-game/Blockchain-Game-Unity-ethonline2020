@@ -40,8 +40,14 @@ public class QueUIControl : NetworkBehaviour
         }
         if (icountdownTime < 0)
         {
-           StartcanvasToDisable.SetActive(false);
+            DisableAfterQue();
         }
+    }
+
+    [Command]
+    void DisableAfterQue()
+    {
+        StartcanvasToDisable.SetActive(false);
     }
 
     void OnChangescountdowntime(float scountdownTime)
