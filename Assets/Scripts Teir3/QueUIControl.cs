@@ -40,7 +40,7 @@ public class QueUIControl : NetworkBehaviour
         }
         if (icountdownTime < 0)
         {
-            Destroy(StartcanvasToDisable);
+           StartcanvasToDisable.SetActive(false);
         }
     }
 
