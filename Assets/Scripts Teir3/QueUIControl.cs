@@ -44,7 +44,7 @@ public class QueUIControl : NetworkBehaviour
         }
     }
 
-    [Command]
+    [ClientRpc]
     void DisableAfterQue()
     {
         StartcanvasToDisable.SetActive(false);
