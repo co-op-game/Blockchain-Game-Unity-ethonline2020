@@ -10,7 +10,7 @@ public class PlayerSpawn : NetworkBehaviour
 
     Vector3 spawnPosition;
     Quaternion spawnRotation;
-    public GameObject[] destroyafterQue;
+    public GameObject[] disableafterQue;
     public GameObject[] enableafterQue;
 
     public override void OnStartLocalPlayer()
@@ -28,9 +28,9 @@ public class PlayerSpawn : NetworkBehaviour
 
     public void AfterQueOverFn()
     {
-        for (int i = 0; i < destroyafterQue.Length; i++)
+        for (int i = 0; i < disableafterQue.Length; i++)
         {
-            Destroy(destroyafterQue[i]);
+            disableafterQue[i].SetActive(false);
         }
 
         if (isLocalPlayer)
