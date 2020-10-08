@@ -52,16 +52,19 @@ public class PlayerSpawn : NetworkBehaviour
     [Command]
     void Cmdspawns(string address)
     {
-        GameObject[] CurrentPlayers = GameObject.FindGameObjectsWithTag("Player"); //find all players currently spawned in server
 
+        //if player name(address) is already spawned return(to avoid multiple person with same wallet).
+        GameObject[] CurrentPlayers = GameObject.FindGameObjectsWithTag("Player"); //find all players currently spawned in server
         foreach (GameObject currplayer in CurrentPlayers)
         {
-            if (address.Equals(currplayer.name, StringComparison.InvariantCultureIgnoreCase)) //if player name(address) is already spawned(to avoid multiple person with same wallet).
+            if (address.Equals(currplayer.name, StringComparison.InvariantCultureIgnoreCase)) 
             {
                 Debug.Log("WalletID already connected, multiple id");
                 return;
             }
         }
+
+
 
             GameObject player = (GameObject)Instantiate(playerprefab, spawnPosition, spawnRotation);
             GameObject owner = this.gameObject;

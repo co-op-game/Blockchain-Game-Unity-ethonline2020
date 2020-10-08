@@ -8,19 +8,14 @@ public class JoinedLateUpdatemyUiBlz : NetworkBehaviour
 {
     public Text qStartBlock;
     public Text qEndBlock;
-    // Start is called before the first frame update
 
     string sStartBlock;
     string sEndBlock;
 
 
-    private void Start()
+    public void Ser()
     {
-        if (isServer) //only run on client .
-        {
-            return;
-        }
-
+ 
         CmdHiserver();
     }
 
@@ -35,7 +30,11 @@ public class JoinedLateUpdatemyUiBlz : NetworkBehaviour
     [ClientRpc]
     void RpcHereYago(string sStartBlock, string sEndBlock)
     {
-        qStartBlock.text = sStartBlock;
-        qEndBlock.text = sEndBlock;
+        if (isLocalPlayer)
+        {
+            qStartBlock.text = sStartBlock;
+            qEndBlock.text = sEndBlock;
+        }
+
     }
 }
