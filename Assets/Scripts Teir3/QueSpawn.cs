@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class QueSpawn : MonoBehaviour
 {
-
     public void QSpawn()
     {
         StartCoroutine(Run());
@@ -22,6 +21,6 @@ public class QueSpawn : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
             javascriptHook.RpcGameStartSpawn();
         }
-    }
 
+    } 
 }

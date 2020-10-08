@@ -37,9 +37,4 @@ public class GetLatestBlockCoroutine : MonoBehaviour
         questart.Que(blockNumberRequest.Result.Value.ToString());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

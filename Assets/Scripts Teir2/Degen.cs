@@ -5,6 +5,7 @@ using System;
 public class Degen : MonoBehaviour
 {
     public AbilityMaster abilitymaster;
+    public PrizeMaster prizemaster;
     Block_DataModel[] txdata;
     int matchedtx;
 
@@ -46,11 +47,11 @@ public class Degen : MonoBehaviour
 
                     matchedtx = i;
                     abilitymaster.SetPlayerAbilityInit(txdata[matchedtx]);
+                    prizemaster.AbilityFunds(float.Parse(txdata[matchedtx].value)); 
 
                 }
             }
         }
-        Debug.Log("uwu");
     }
 
 }

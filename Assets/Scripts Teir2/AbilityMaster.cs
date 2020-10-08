@@ -20,6 +20,7 @@ public class AbilityMaster : NetworkBehaviour
         {
             if(matchedtxdata.from.Equals(player.name, StringComparison.InvariantCultureIgnoreCase)) //if player name(address) is equal to from value in  matched txdata.
             {
+                Debug.Log("uwu");
                 Player_Abilities player_abilities = player.GetComponent<Player_Abilities>(); //get player properties script of this player.
                 SetAbilityAcctotx(matchedtxdata, player_abilities); //transfer matched tx + its specific player ability script to combine.
             }

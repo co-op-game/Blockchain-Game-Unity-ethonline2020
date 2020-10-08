@@ -8,7 +8,7 @@ public class StartClickPrefab : NetworkBehaviour
     GameObject startquestart;
     ClientServerStartUIConnection clientServerStartUI;
 
-    void Start()
+    void Start() //this is spawned on server if any client clicks start, then on server only all tx processing /ability setup happens
     {
         if(!isServer)
         { 

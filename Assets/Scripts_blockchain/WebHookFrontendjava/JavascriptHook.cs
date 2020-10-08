@@ -12,6 +12,7 @@ public class JavascriptHook : NetworkBehaviour
 
     public Text AddressUI;
     public Text AddressUIinGame;
+    public AlphaBlinking DisableStartUiblnkingText;
 
 
     [SyncVar]string address;
@@ -28,8 +29,11 @@ public class JavascriptHook : NetworkBehaviour
                 address = recievedaddress;
                 Debug.Log("Connected:");
                 Debug.Log(recievedaddress);
+            
                 AddressUI.text = address;
                 AddressUIinGame.text = address;
+
+                DisableStartUiblnkingText.enabled = false;
         }
     }
 

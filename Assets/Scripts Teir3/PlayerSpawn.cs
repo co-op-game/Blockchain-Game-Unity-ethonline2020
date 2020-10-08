@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 public class PlayerSpawn : NetworkBehaviour
 {   
@@ -21,8 +22,8 @@ public class PlayerSpawn : NetworkBehaviour
 
     public void Awake()
     {
-        spawnPosition = new Vector3(Random.Range(-8.0f, 8.0f), 0.0f, Random.Range(-8.0f, 8.0f));
-        spawnRotation = Quaternion.Euler(0.0f, Random.Range(0.0f, 180.0f), 0);
+        spawnPosition = new Vector3(UnityEngine.Random.Range(-8.0f, 8.0f), 0.0f, UnityEngine.Random.Range(-8.0f, 8.0f));
+        spawnRotation = Quaternion.Euler(0.0f, UnityEngine.Random.Range(0.0f, 180.0f), 0);
        
     }
 
@@ -51,10 +52,21 @@ public class PlayerSpawn : NetworkBehaviour
     [Command]
     void Cmdspawns(string address)
     {
-        GameObject player = (GameObject)Instantiate(playerprefab, spawnPosition, spawnRotation);
-        GameObject owner = this.gameObject;
-        NetworkServer.SpawnWithClientAuthority(player, owner);
-        player.name = address;
-        //player.name = "debug";
+        GameObject[] CurrentPlayers = GameObject.FindGameObjectsWithTag("Player"); //find all players currently spawned in server
+
+        foreach (GameObject currplayer in CurrentPlayers)
+        {
+            if (address.Equals(currplayer.name, StringComparison.InvariantCultureIgnoreCase)) //if player name(address) is already spawned(to avoid multiple person with same wallet).
+            {
+                Debug.Log("WalletID already connected, multiple id");
+                return;
+            }
+        }
+
+            GameObject player = (GameObject)Instantiate(playerprefab, spawnPosition, spawnRotation);
+            GameObject owner = this.gameObject;
+            NetworkServer.SpawnWithClientAuthority(player, owner);
+            player.name = address;
+            //player.name = "debug";
     }
 }

@@ -9,6 +9,7 @@ public class QueUIControl : NetworkBehaviour
     public Text QEndBlock;
     public Text countdownDisplay;
     public GameObject StartcanvasToDisable;
+    public GameObject GamecanvasToEnable;
     // server vars
     [SyncVar(hook = "OnChangescountdowntime")] float scountdownTime;
     [SyncVar(hook = "OnChangeqstartblock")] string s_qstartBlock = null;
@@ -28,6 +29,7 @@ public class QueUIControl : NetworkBehaviour
 
     }
 
+
     IEnumerator CountdownToStart(float icountdownTime)
     {
         while(icountdownTime > 0)
@@ -40,14 +42,15 @@ public class QueUIControl : NetworkBehaviour
         }
         if (icountdownTime < 0)
         {
-            RpcDisableAfterQue();
+            RpcDisableEnableAfterQue();
         }
     }
 
     [ClientRpc]
-    void RpcDisableAfterQue()
+    void RpcDisableEnableAfterQue()
     {
         StartcanvasToDisable.SetActive(false);
+        GamecanvasToEnable.SetActive(true);
     }
 
     void OnChangescountdowntime(float scountdownTime)
