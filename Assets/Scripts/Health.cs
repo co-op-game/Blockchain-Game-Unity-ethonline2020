@@ -9,6 +9,7 @@ public class Health : NetworkBehaviour
     [SyncVar(hook = "OnChangearmor")] float armor;
 
     public RectTransform healthBar;
+    public RectTransform armorBar;
 
     public bool destroyOnDeath;
     public Player_Abilities player_abilities;
@@ -20,7 +21,7 @@ public class Health : NetworkBehaviour
         {
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         }
-        armor = 0;
+        armor = player_abilities.abilityvalue;
     }
 
     public void TakeDamage(int amount)
@@ -62,8 +63,8 @@ public class Health : NetworkBehaviour
     }
 
     void OnChangearmor(float armor)
-    { 
-    
+    {
+        armorBar.sizeDelta = new Vector2(armor * 1, healthBar.sizeDelta.y);
     }
 
     void OnChangeHealth(int health)
