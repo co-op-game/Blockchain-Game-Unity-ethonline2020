@@ -53,6 +53,8 @@ public class PlayerSpawn : NetworkBehaviour
     void Cmdspawns(string address)
     {
 
+        /*
+
         //if player name(address) is already spawned return(to avoid multiple person with same wallet).
         GameObject[] CurrentPlayers = GameObject.FindGameObjectsWithTag("Player"); //find all players currently spawned in server
         foreach (GameObject currplayer in CurrentPlayers)
@@ -64,6 +66,7 @@ public class PlayerSpawn : NetworkBehaviour
             }
         }
 
+    */
 
 
             GameObject player = (GameObject)Instantiate(playerprefab, spawnPosition, spawnRotation);

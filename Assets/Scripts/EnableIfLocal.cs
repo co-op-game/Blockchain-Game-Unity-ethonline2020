@@ -11,7 +11,7 @@ public class EnableIfLocal : NetworkBehaviour
         for (int i = 0; i < toenable.Length; i++)
         {
             toenable[i].SetActive(false);
-            if (isLocalPlayer)
+            if (isLocalPlayer || hasAuthority)
             {
                 toenable[i].SetActive(true);
             }

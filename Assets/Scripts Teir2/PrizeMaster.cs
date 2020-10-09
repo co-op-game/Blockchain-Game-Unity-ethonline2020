@@ -6,23 +6,33 @@ public class PrizeMaster : MonoBehaviour
 {
 
     public AbilityUiControl abiltyuicontrol;
+    public EtherTransferCoroutinesUnityWebRequest ethtransfer;
 
-    float abilityfunds; //This Rounds total Ability Funds.
+    decimal prizepool; //This Rounds total Ability Funds.
 
     void Start()
     {
-        abilityfunds = 0;
+        prizepool = 0;
     }
 
-    public void AbilityFunds(float txvalue)
-    {
-        abilityfunds = abilityfunds + txvalue;
-        abiltyuicontrol.AbilityFundPool(abilityfunds);
+    public void AbilityFunds(decimal txvalue)
+    {   
+        txvalue = txvalue / 1000000000000000000; // Wei to ether
+        prizepool = prizepool + txvalue;
+        abiltyuicontrol.AbilityFundPool(prizepool);
+        Debug.Log(prizepool);
+
+       //debug SendAbiltyFunds("0x025ababef744c64a679f9b29d9c3a94f3e53d4e6");
     }
 
 
-    public void SendAbiltyFunds()
-    {
+    public void SendAbiltyFunds(string winnername)
+    {   
+        if(prizepool > 0)
+        {
+            ethtransfer.TransferRequest(prizepool, winnername);
+        }
+
 
     }
 

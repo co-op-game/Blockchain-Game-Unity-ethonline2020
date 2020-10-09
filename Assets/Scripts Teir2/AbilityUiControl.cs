@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class AbilityUiControl : NetworkBehaviour
 {
 
-    [SyncVar(hook = "OnChangesprizepool")] float prizepool;
+    [SyncVar(hook = "OnChangesprizepool")] decimal prizepool;
     public Text prizepoolvalueUI;
-    public void AbilityFundPool(float abilityfunds)
+    public void AbilityFundPool(decimal abilityfunds)
     {
         prizepool = abilityfunds;
-    }
 
-    void OnChangesprizepool(float prizepool)
+    }
+    void OnChangesprizepool(decimal prizepool)
     {
         prizepoolvalueUI.text = prizepool.ToString();
     }

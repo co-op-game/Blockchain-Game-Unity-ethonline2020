@@ -39,6 +39,8 @@ public class QueUIControl : NetworkBehaviour
             yield return new WaitForSeconds(1f);
             icountdownTime--;
             scountdownTime = icountdownTime;
+            s_qstartBlock = QStartBlock.text;
+            s_qEndBlock = QEndBlock.text;
         }
         if (icountdownTime < 0)
         {

@@ -40,8 +40,12 @@ public class AbilityMaster : NetworkBehaviour
 
         player_abilities.address = matchedtxdata.from;
 
-        // todo here: link matchedtxdata.value (convert from string to float) to player_abilities.abilityvalue
-        //float abilityvalue = 
+        decimal abilityvalue = decimal.Parse(matchedtxdata.value);
+        abilityvalue = abilityvalue / 1000000000000000000; // Wei to ether
+
+        float f_abilityvalue = (float)abilityvalue; //changing decimal to float : optimatize
+        f_abilityvalue *= 100; //1ether = 100 ability
+        player_abilities.abilityvalue = f_abilityvalue; //ablityvalue acc to tx value.
 
     }
 }

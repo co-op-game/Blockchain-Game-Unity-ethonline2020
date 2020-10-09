@@ -41,18 +41,19 @@ public class EtherTransferCoroutinesUnityWebRequest : MonoBehaviour {
 
     }
 
-    public void TransferRequest()
+    public void TransferRequest(decimal Amount, string winner)
     {
-        StartCoroutine(TransferEther());
+        Amount = Amount - (decimal)0.000000002; //subtracting 2 gwei for fees.
+        StartCoroutine(TransferEther(Amount, winner));
     }
 
     //Sample of new features / requests
-    public IEnumerator TransferEther()
+    public IEnumerator TransferEther(decimal Amount, string AddressTo)
     {
         Url = InputUrl.text;
         PrivateKey = InputPrivateKey.text;
         AddressTo = InputAddressTo.text;
-        Amount = System.Decimal.Parse(InputAmount.text);
+        //Amount = System.Decimal.Parse(InputAmount.text);
          
 
         //initialising the transaction request sender

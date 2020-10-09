@@ -46,8 +46,8 @@ public class Degen : MonoBehaviour
                 {
 
                     matchedtx = i;
-                    abilitymaster.SetPlayerAbilityInit(txdata[matchedtx]);
-                    prizemaster.AbilityFunds(float.Parse(txdata[matchedtx].value)); 
+                    abilitymaster.SetPlayerAbilityInit(txdata[matchedtx]); //set player ability acc to funds value.
+                    prizemaster.AbilityFunds(decimal.Parse(txdata[matchedtx].value)); //send funds to prizepool.
 
                 }
             }

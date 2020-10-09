@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class Player_Abilities : NetworkBehaviour
 {
     [SyncVar(hook = "OnAddressChange")] public string address = "not_set";
-    [SyncVar] public float abilityvalue = 0;
+    [SyncVar(hook = "Onvaluechange")] public float abilityvalue = 0;
 
     private void Start()
     {
@@ -18,5 +18,9 @@ public class Player_Abilities : NetworkBehaviour
         Debug.Log(address);
     }
 
+    void Onvaluechange(float abilityvalue)
+    {
+        Debug.Log(abilityvalue);
+    }
 
 }

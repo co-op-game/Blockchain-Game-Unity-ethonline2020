@@ -11,7 +11,7 @@ public class QueStart : MonoBehaviour
     string WEB_URL_TIME;
     public int BlocksBwQueStartandEnd = 0;
     public string EtherscanAPIKey = "WJTWK63X8WZ95D67JSGJ6NPP5ISZZKNM84";
-    public string serveracc = "0x5D4F634A8c585b9A4B15fd99511D23F0bbfDd1f5";
+    public string serveracc ;
     public Degen degen;
     public QueUIControl queUIControl;
     public QueSpawn qspawn;

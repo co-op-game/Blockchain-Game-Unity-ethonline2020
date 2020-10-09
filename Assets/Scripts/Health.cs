@@ -6,11 +6,12 @@ public class Health : NetworkBehaviour
 
     public const int maxHeath = 100;
     [SyncVar(hook = "OnChangeHealth")] public int currentHealth = maxHeath;
+    [SyncVar(hook = "OnChangearmor")] float armor;
 
     public RectTransform healthBar;
 
     public bool destroyOnDeath;
-
+    public Player_Abilities player_abilities;
     private NetworkStartPosition[] spawnPoints;
 
     void Start()
@@ -19,6 +20,7 @@ public class Health : NetworkBehaviour
         {
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         }
+        armor = 0;
     }
 
     public void TakeDamage(int amount)
@@ -29,33 +31,49 @@ public class Health : NetworkBehaviour
             return;
         }
 
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
+        if(player_abilities.abilityvalue > 0)
         {
-
-            if (destroyOnDeath)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                currentHealth = maxHeath;
-                RpcRespawn();
-            }
-
+            armor = player_abilities.abilityvalue;
+            armor -= amount/2;
+            player_abilities.abilityvalue = armor;
         }
-        OnChangeHealth(currentHealth);
 
+
+        if (armor <= 0)
+        {
+            currentHealth -= amount;
+
+                if (currentHealth <= 0)
+                {
+
+                    if (destroyOnDeath)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        currentHealth = maxHeath;
+                        // RpcRespawn();
+                    }
+                }
+             OnChangeHealth(currentHealth);
+         }
+        OnChangearmor(armor);
     }
 
+    void OnChangearmor(float armor)
+    { 
+    
+    }
 
     void OnChangeHealth(int health)
     {
         healthBar.sizeDelta = new Vector2(health * 2, healthBar.sizeDelta.y);
     }
 
-    [ClientRpc]
+    /*
+
+    [ClientRpc] 
     void RpcRespawn()
     {
         if (isLocalPlayer)
@@ -70,5 +88,5 @@ public class Health : NetworkBehaviour
             transform.position = spawnPoint;
         }
     }
-
+    */
 }
