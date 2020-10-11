@@ -1,48 +1,141 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
+    public CharacterController cControl;
+    
+    private Vector3 moveDirection;
 
+    public float gravity = 9.8f;
+    public float walkForce = 4f;
+    public float sprintForce = 8f;
+    public bool isSprinting;
+    public float stoppingForceGround;
+
+    [Header("Camera")]
+    public bool invertCamera = true;
+    public bool disableCursor = true;
+    public Transform camTrans;
+    public float verticalLookSpeed = 0.1f;
+    public float horizontalLookSpeed = 0.1f;
+
+    public Transform shoulder;
+    
+    [Header("Bullets")]
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
+    public int bulletLimit = 30;
+    public float bulletLifetime = 5f;
+    private List<GameObject> bullets;
+
+    void Start()
+    {
+        SetCursorActive(!disableCursor);
+        bullets = new List<GameObject>();
+    }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!hasAuthority)
+        //if (!hasAuthority) return;
+        
+        MouseMovement();
+
+        if (Input.GetButtonDown("Fire1"))
         {
-            return;
+            Fire();
         }
 
-        float x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-        float z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
-        transform.Rotate(0, x, 0);
-        transform.Translate(0, 0, z);
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        
+        
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+    void FixedUpdate()
+    {
+        //if (!hasAuthority) return;
+
+        Vector3 appliedForce = Vector3.zero;
+        
+        //Camera & player rotation
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector3 inputDirection = new Vector3(horizontal, 0f, vertical).normalized;
+            
+        Vector3 moveForce = Vector3.zero;
+
+        //Move input direction
+        if (inputDirection.magnitude >= 0.1f)
         {
-            CmdFire();
+            //float targetAngle = Mathf.Atan2(faceDirection.x, faceDirection.z) * Mathf.Rad2Deg + camTrans.eulerAngles.y;
+            float moveAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + camTrans.eulerAngles.y;
+
+            moveDirection = Quaternion.Euler(0f, moveAngle, 0f) * Vector3.forward;
+                
+            //Debug.Log("Velocity: " + velocity);
+                
+            float moveSpeed = isSprinting ? sprintForce : walkForce;
+
+            moveForce = moveDirection * moveSpeed;
+            //Debug.Log("Move force: " + moveForce);
+
+            Vector3 stoppingForce = Vector3.zero;
+
+            if (Mathf.Pow((appliedForce.x + moveForce.x), 2) < Mathf.Pow(appliedForce.x, 2))
+                stoppingForce.x = stoppingForceGround;
+            if (Mathf.Pow((appliedForce.z + moveForce.z), 2) < Mathf.Pow(appliedForce.z, 2))
+                stoppingForce.z = stoppingForceGround;
+
+            moveForce.y = 0f;
+            
+            Vector3 gravityForce = new Vector3(0,-gravity, 0);
+
+            appliedForce += (moveForce - stoppingForce + gravityForce) * Time.deltaTime;
         }
 
+        cControl.Move(appliedForce);
     }
 
-    [Command]
-    public void CmdFire()
+    void MouseMovement()
     {
-        GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 6.0f;
+        float h = horizontalLookSpeed * Input.GetAxis("Mouse X");
+        float v = verticalLookSpeed * Input.GetAxis("Mouse Y");
+        v *= invertCamera ? 1 : -1;
 
-        // Spawn the bullet on the client
-        NetworkServer.Spawn(bullet);
+        //if (camTrans.eulerAngles.x + v <= 10f || camTrans.eulerAngles.x + v >= 80f) v = 0;
 
-        Destroy(bullet, 2f);
+        camTrans.RotateAround(camTrans.position, camTrans.right, v);
+        shoulder.RotateAround(shoulder.position, shoulder.right, v);
+        transform.RotateAround(transform.position, transform.up, h);
     }
 
-    public override void OnStartAuthority()
+    public void Fire()
     {
-        GetComponent<MeshRenderer>().material.color = Color.blue;
+        if (bullets.Count < bulletLimit)
+        {
+            GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 30f;
+            bullet.GetComponent<Bullet>().pc = this;
+            bullets.Add(bullet);
+            
+        }
+    }
+    
+    public void SetCursorActive(bool active)
+    {
+        Cursor.lockState = active ? CursorLockMode.Confined : CursorLockMode.Locked;
+        Cursor.visible = active;
+    }
+
+    public void BulletDeath(Bullet bullet)
+    {
+        bullets.Remove(bullet.gameObject);
+        Destroy(bullet.gameObject);
     }
 
 }
