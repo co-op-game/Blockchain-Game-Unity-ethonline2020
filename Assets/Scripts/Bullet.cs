@@ -1,6 +1,16 @@
 ﻿using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
+	public PlayerController pc;
+	public float bulletLifeDuration = 5f;
+	private float timer = 0f;
+
+	void Update()
+	{
+		timer += Time.deltaTime;
+		if(timer > bulletLifeDuration) Die();
+	}
 
 	void OnCollisionEnter(Collision collison){
 
@@ -9,7 +19,13 @@ public class Bullet : MonoBehaviour {
 		if (health != null) {
 			health.TakeDamage (10);
 		}
-		Destroy (gameObject);
+
+		Die();
+	}
+
+	void Die()
+	{
+		pc.BulletDeath(this);
 	}
 
 }
