@@ -10,14 +10,14 @@ public class GetLatestBlockCoroutine : MonoBehaviour
 {
     public string Url = "https://mainnet.infura.io";
 
-    public InputField ResultBlockNumber;
-    public InputField InputUrl;
+  //  public InputField ResultBlockNumber;
+    //public InputField InputUrl;
     public QueStart questart;
 
     // Use this for initialization
     void Start()
     {
-        InputUrl.text = Url;
+      //  InputUrl.text = Url;
     }
 
     public void GetBlockNumberRequest()
@@ -27,13 +27,13 @@ public class GetLatestBlockCoroutine : MonoBehaviour
 
     public IEnumerator GetBlockNumber()
     {
-        Url = InputUrl.text;
+        //Url = InputUrl.text;
 
         var blockNumberRequest = new EthBlockNumberUnityRequest(Url);
 
         yield return blockNumberRequest.SendRequest();
 
-        ResultBlockNumber.text = blockNumberRequest.Result.Value.ToString();
+        //ResultBlockNumber.text = blockNumberRequest.Result.Value.ToString();
         questart.Que(blockNumberRequest.Result.Value.ToString());
     }
 

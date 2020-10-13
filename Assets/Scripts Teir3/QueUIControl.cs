@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+
 public class QueUIControl : NetworkBehaviour
 {
     public Text QStartBlock;
     public Text QEndBlock;
     public Text countdownDisplay;
-    public GameObject StartcanvasToDisable;
-    public GameObject GamecanvasToEnable;
+    public GameObject StartLobbycanvas;
+    public GameObject Gamecanvas;
     // server vars
     [SyncVar(hook = "OnChangescountdowntime")] float scountdownTime;
     [SyncVar(hook = "OnChangeqstartblock")] string s_qstartBlock = null;
@@ -48,11 +50,20 @@ public class QueUIControl : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    void RpcDisableEnableAfterQue()
+    public void Lobby()
     {
-        StartcanvasToDisable.SetActive(false);
-        GamecanvasToEnable.SetActive(true);
+        StartLobbycanvas.SetActive(true);
+        Gamecanvas.SetActive(false);
+        countdownDisplay.text = "";
+        QStartBlock.text = "0000000";
+        QEndBlock.text = "0000000";
+    }
+
+    [ClientRpc]
+    public void RpcDisableEnableAfterQue()
+    {
+        StartLobbycanvas.SetActive(false);
+        Gamecanvas.SetActive(true);
     }
 
     void OnChangescountdowntime(float scountdownTime)

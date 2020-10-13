@@ -45,6 +45,7 @@ public class AbilityMaster : NetworkBehaviour
 
         float f_abilityvalue = (float)abilityvalue; //changing decimal to float : optimatize
         f_abilityvalue *= 100; //1ether = 100 ability
+       // if (f_abilityvalue > 1) { f_abilityvalue = 1; } //Max 1 Ether only ability, efn Whale Proof!
         player_abilities.abilityvalue = f_abilityvalue; //ablityvalue acc to tx value.
 
     }
