@@ -13,27 +13,33 @@ public class JavascriptHook : NetworkBehaviour
     public Text AddressUI;
     public Text AddressUIinGame;
     public AlphaBlinking DisableStartUiblnkingText;
+    PlayerListUi plyruicntrl;
 
-
-    [SyncVar]string address;
+    [SyncVar] public string address;
     void Start()
     {
         spawned = false;
-        address = null;
+       // address = null;
+
+        GameObject startque;
+        startque = GameObject.Find("Start : QueStart");
+        plyruicntrl = startque.GetComponent<PlayerListUi>();
     }
+
 
     public void WebHookSpawn(string recievedaddress) //called from frontend webgl html.
     {
         if (this.isLocalPlayer)
         {
-                address = recievedaddress;
-                Debug.Log("Connected:");
-                Debug.Log(recievedaddress);
-            
-                AddressUI.text = address;
-                AddressUIinGame.text = address;
+            address = recievedaddress;
+            Debug.Log("Connected:");
+            Debug.Log(recievedaddress);
 
-                DisableStartUiblnkingText.enabled = false;
+            AddressUI.text = address;
+            AddressUIinGame.text = address;
+
+            DisableStartUiblnkingText.enabled = false;
+            plyruicntrl.RpcUpdateUi();
         }
     }
 
@@ -42,35 +48,35 @@ public class JavascriptHook : NetworkBehaviour
     {
         if (this.isLocalPlayer)
         {
-            if (spawned == !true)
-            {
+          //  if (spawned == !true)
+          //  {
                 if (address != null) //check if wallet is connected /came through webhookspawn>^ //enable in live environment.
                 {
                     playerspawn.Spawn(address);
                     spawned = true;
                 }
                 Debug.Log("NULL Adress ID");
-            }
+            //}
         }
         playerspawn.AfterQueOverFn();
 
     }
 
 
-        //below for debugging only. 
-        void Update()
+    //below for debugging only. 
+    void Update()
+    {
+        if (this.isLocalPlayer)
         {
-            if (this.isLocalPlayer)
-            {
-                if (spawned == !true)
+         //   if (spawned == !true)
+           // {
+                if (Input.GetKeyDown(KeyCode.S))
                 {
-                    if (Input.GetKeyDown(KeyCode.S))
-                    {
-                        playerspawn.Spawn(address);
-                        spawned = true;
-                    }
+                    playerspawn.Spawn(address);
+                    spawned = true;
                 }
-            }  
-
+           // }
         }
-}   
+
+    }
+}

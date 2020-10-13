@@ -22,6 +22,7 @@ public class Health : NetworkBehaviour
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         }
         armor = player_abilities.abilityvalue;
+        OnChangearmor(armor);
     }
 
     public void TakeDamage(int amount)
@@ -64,7 +65,7 @@ public class Health : NetworkBehaviour
 
     void OnChangearmor(float armor)
     {
-        armorBar.sizeDelta = new Vector2(armor * 1, healthBar.sizeDelta.y);
+        armorBar.sizeDelta = new Vector2(armor * 2, healthBar.sizeDelta.y);
     }
 
     void OnChangeHealth(int health)
