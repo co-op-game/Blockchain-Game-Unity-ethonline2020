@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
+using Mirror;
 
 public class Health : NetworkBehaviour
 {
 
     public const int maxHeath = 100;
-    [SyncVar(hook = "OnChangeHealth")] public int currentHealth = maxHeath;
-    [SyncVar(hook = "OnChangearmor")] float armor;
+    [SyncVar(hook = nameof(OnChangeHealth))] public int currentHealth = maxHeath;
+    [SyncVar(hook = nameof(OnChangearmor))] float armor;
 
     public RectTransform healthBar;
     public RectTransform armorBar;
@@ -22,6 +22,7 @@ public class Health : NetworkBehaviour
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         }
         armor = player_abilities.abilityvalue;
+        OnChangearmor(0,armor);
     }
 
     public void TakeDamage(int amount)
@@ -57,17 +58,17 @@ public class Health : NetworkBehaviour
                         // RpcRespawn();
                     }
                 }
-             OnChangeHealth(currentHealth);
+             OnChangeHealth(1,currentHealth);
          }
-        OnChangearmor(armor);
+        OnChangearmor(0,armor);
     }
 
-    void OnChangearmor(float armor)
+    void OnChangearmor(float oldarmor, float armor)
     {
-        armorBar.sizeDelta = new Vector2(armor * 1, healthBar.sizeDelta.y);
+        armorBar.sizeDelta = new Vector2(armor * 2, healthBar.sizeDelta.y);
     }
 
-    void OnChangeHealth(int health)
+    void OnChangeHealth(int oldhealth, int health)
     {
         healthBar.sizeDelta = new Vector2(health * 2, healthBar.sizeDelta.y);
     }

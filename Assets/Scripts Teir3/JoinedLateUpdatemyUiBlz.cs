@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Mirror;
 using UnityEngine.UI;
 
 public class JoinedLateUpdatemyUiBlz : NetworkBehaviour
@@ -17,7 +17,7 @@ public class JoinedLateUpdatemyUiBlz : NetworkBehaviour
 
     public void Ser()
     {
-        CmdHiserver();     //this scripts logic prob wont work, to be fixed later. - syncing qstart ,endstart block UI on clients after they join late. 
+        CmdHiserver();    
     }
 
     [Command]

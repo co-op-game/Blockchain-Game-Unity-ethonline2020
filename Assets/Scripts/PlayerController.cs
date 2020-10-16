@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
-public class PlayerController : MonoBehaviour
+using Mirror;
+public class PlayerController : NetworkBehaviour
 {
+    public MeshRenderer[] meshrendere;
     public CharacterController cControl;
     
     private Vector3 moveDirection;
@@ -32,6 +32,14 @@ public class PlayerController : MonoBehaviour
     public float bulletLifetime = 5f;
     private List<GameObject> bullets;
 
+    public override void OnStartAuthority()
+    {
+        for (int i = 0; i < meshrendere.Length; i++)
+        {
+            meshrendere[i].material.color = Color.blue;
+        }
+    }
+
     void Start()
     {
         SetCursorActive(!disableCursor);
@@ -42,7 +50,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        //if (!hasAuthority) return;
+        if (!hasAuthority) return;
         
         MouseMovement();
 
@@ -58,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (!hasAuthority) return;
+        if (!hasAuthority) return;
 
         Vector3 appliedForce = Vector3.zero;
         
@@ -114,12 +122,25 @@ public class PlayerController : MonoBehaviour
         transform.RotateAround(transform.position, transform.up, h);
     }
 
+    GameObject bullet;
+
     public void Fire()
+    {
+        
+        CmdFire(bulletSpawn.position, bulletSpawn.rotation);
+    }
+
+    [Command]
+    public void CmdFire(Vector3 pos, Quaternion rot)
     {
         if (bullets.Count < bulletLimit)
         {
-            GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            GameObject bullet = (GameObject)Instantiate(bulletPrefab, pos, rot);
             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 30f;
+
+            // Spawn the bullet on the client
+            NetworkServer.Spawn(bullet);
+
             bullet.GetComponent<Bullet>().pc = this;
             bullets.Add(bullet);
             

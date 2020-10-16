@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
+using Mirror;
+using UnityEngine.SceneManagement;
+
 public class QueUIControl : NetworkBehaviour
 {
     public Text QStartBlock;
     public Text QEndBlock;
     public Text countdownDisplay;
-    public GameObject StartcanvasToDisable;
-    public GameObject GamecanvasToEnable;
+    public GameObject StartLobbycanvas;
+    public GameObject Gamecanvas;
+    public ClientServerStartUIConnection clientsrvrui;
+    public AbilityUiControl abilityuicntrl;
+
     // server vars
     [SyncVar(hook = "OnChangescountdowntime")] float scountdownTime;
     [SyncVar(hook = "OnChangeqstartblock")] string s_qstartBlock = null;
@@ -48,24 +53,34 @@ public class QueUIControl : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    void RpcDisableEnableAfterQue()
+    public void Lobby()
     {
-        StartcanvasToDisable.SetActive(false);
-        GamecanvasToEnable.SetActive(true);
+        StartLobbycanvas.SetActive(true);
+        Gamecanvas.SetActive(false);
+        countdownDisplay.text = "";
+        QStartBlock.text = "000000000";
+        QEndBlock.text = "000000000";
+        clientsrvrui.questarted = false;
     }
 
-    void OnChangescountdowntime(float scountdownTime)
+    [ClientRpc]
+    public void RpcDisableEnableAfterQue()
+    {
+        StartLobbycanvas.SetActive(false);
+        Gamecanvas.SetActive(true);
+    }
+
+    void OnChangescountdowntime(float oldscountdownTime, float scountdownTime)
     {
         countdownDisplay.text = scountdownTime.ToString();
     }
 
-    void OnChangeqstartblock(string s_qstartBlock) {
+    void OnChangeqstartblock(string olds_qstartBlock, string s_qstartBlock) {
 
         QStartBlock.text = s_qstartBlock;
     }
 
-    void OnChangeqEndBlock(string s_qEndBlock)
+    void OnChangeqEndBlock(string olds_qEndBlock, string s_qEndBlock)
     {
         QEndBlock.text = s_qEndBlock;
     }

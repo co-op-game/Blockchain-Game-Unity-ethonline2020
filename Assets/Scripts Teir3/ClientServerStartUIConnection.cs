@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Mirror;
 using UnityEngine.UI;
 
 public class ClientServerStartUIConnection : NetworkBehaviour
@@ -9,7 +9,7 @@ public class ClientServerStartUIConnection : NetworkBehaviour
 
     public GetLatestBlockVanillaNethereum getlatestBlockVanillaNethereum;
 
-    bool questarted;
+    public bool questarted;
 
     private void Start()
     {
@@ -32,6 +32,6 @@ public class ClientServerStartUIConnection : NetworkBehaviour
     [ClientRpc]
     public void RpcDisableClickButton()
     {
-        Destroy(StartButton);
+        StartButton.SetActive(false);
     }
 }

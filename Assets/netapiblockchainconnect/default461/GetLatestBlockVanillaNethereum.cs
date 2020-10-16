@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Nethereum.Contracts;
 using Nethereum.Web3;
-using UnityEngine.Networking;
+using Mirror;
 
 
 public class GetLatestBlockVanillaNethereum : NetworkBehaviour {
@@ -22,14 +22,14 @@ public class GetLatestBlockVanillaNethereum : NetworkBehaviour {
 
     public string Url = "https://rinkeby.infura.io/v3/8136c859e3274c1c92ac552da3910156";
    
-    public InputField ResultBlockNumber;
-    public InputField InputUrl;
+   // public InputField ResultBlockNumber;
+   // public InputField InputUrl;
     public QueStart questart;
 
     // Use this for initialization
     void Start()
     {
-        InputUrl.text = Url;
+     //   InputUrl.text = Url;
     }
 
     public async void GetBlockNumber()
@@ -47,16 +47,11 @@ public class GetLatestBlockVanillaNethereum : NetworkBehaviour {
         var web3 = new Web3(Url);
         
         var blockNumber = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
-        ResultBlockNumber.text = blockNumber.Value.ToString();
+       // ResultBlockNumber.text = blockNumber.Value.ToString();
 
         questart.Que(blockNumber.Value.ToString());
 
     }
 
    
-    // Update is called once per frame
-    void Update ()
-    {
-        
-    }
 }
