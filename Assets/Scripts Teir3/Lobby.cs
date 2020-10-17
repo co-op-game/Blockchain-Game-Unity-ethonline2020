@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+<<<<<<< HEAD
 using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour
+=======
+using UnityEngine.Networking;
+using UnityEngine.UI;
+
+public class Lobby : NetworkBehaviour
+>>>>>>> 8fde4476ec600ded30429aa4ba985868b0f593ff
 {
     void Awake()
     {

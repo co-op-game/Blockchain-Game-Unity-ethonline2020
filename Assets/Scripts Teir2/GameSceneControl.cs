@@ -16,11 +16,16 @@ public class GameSceneControl : NetworkBehaviour
             return;
         }
         gamended = false;
+<<<<<<< HEAD
         
+=======
+        StartCoroutine(Run());
+>>>>>>> 8fde4476ec600ded30429aa4ba985868b0f593ff
         GameObject srvrmanager = GameObject.Find("ServerManager");
         netowkrlobbym = srvrmanager.GetComponent<CustomNetworkManager>();
     }
 
+<<<<<<< HEAD
     public void RunCheckPlayer()
     {
         StartCoroutine(Run());
@@ -30,6 +35,13 @@ public class GameSceneControl : NetworkBehaviour
     {
         yield return new WaitForSeconds(7);
         SpawnedPlayers();
+=======
+    private IEnumerator Run()
+    {
+        SpawnedPlayers();
+
+        yield return new WaitForSeconds(7);
+>>>>>>> 8fde4476ec600ded30429aa4ba985868b0f593ff
         StartCoroutine(Run());
     }
 
@@ -44,6 +56,7 @@ public class GameSceneControl : NetworkBehaviour
             SendPrizePool(Players[0].name.ToString());
             gameendcourotunerun();
         }
+<<<<<<< HEAD
 
         if (Players.Length == 0) //gameend
         {
@@ -51,6 +64,8 @@ public class GameSceneControl : NetworkBehaviour
             gameendcourotunerun();
         }
 
+=======
+>>>>>>> 8fde4476ec600ded30429aa4ba985868b0f593ff
         Players = null;
     }
 
