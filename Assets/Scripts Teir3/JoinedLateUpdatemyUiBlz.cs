@@ -17,7 +17,7 @@ public class JoinedLateUpdatemyUiBlz : NetworkBehaviour
 
     public void Ser()
     {
-        CmdHiserver();     //not sure this scripts logic prob works, if join late and current countdown blocks shown cool or to be fixed later. - syncing qstart ,endstart block UI on clients after they join late. 
+        CmdHiserver();     //this scripts logic prob wont work, to be fixed later. - syncing qstart ,endstart block UI on clients after they join late. 
     }
 
     [Command]

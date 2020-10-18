@@ -9,7 +9,7 @@ public class ClientServerStartUIConnection : NetworkBehaviour
 
     public GetLatestBlockVanillaNethereum getlatestBlockVanillaNethereum;
 
-    public bool questarted;
+    bool questarted;
 
     private void Start()
     {
@@ -32,6 +32,6 @@ public class ClientServerStartUIConnection : NetworkBehaviour
     [ClientRpc]
     public void RpcDisableClickButton()
     {
-        StartButton.SetActive(false);
+        Destroy(StartButton);
     }
 }

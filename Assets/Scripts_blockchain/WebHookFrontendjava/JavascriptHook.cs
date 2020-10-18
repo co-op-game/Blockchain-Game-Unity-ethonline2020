@@ -13,43 +13,28 @@ public class JavascriptHook : NetworkBehaviour
     public Text AddressUI;
     public Text AddressUIinGame;
     public AlphaBlinking DisableStartUiblnkingText;
-    PlayerListUi plyruicntrl;
 
-    [SyncVar]public string address;
+
+    [SyncVar]string address;
     void Start()
     {
         spawned = false;
-        address = "0x";
-
-        GameObject startque;
-        startque = GameObject.Find("Start : QueStart");
-        plyruicntrl = startque.GetComponent<PlayerListUi>();
+        address = null;
     }
-
 
     public void WebHookSpawn(string recievedaddress) //called from frontend webgl html.
     {
-        servercall(recievedaddress);
-        address = recievedaddress;
-        AddressUI.text = address;
-        AddressUIinGame.text = address;
-        DisableStartUiblnkingText.enabled = false;
-    }
+        if (this.isLocalPlayer)
+        {
+                address = recievedaddress;
+                Debug.Log("Connected:");
+                Debug.Log(recievedaddress);
+            
+                AddressUI.text = address;
+                AddressUIinGame.text = address;
 
-    void servercall(string recievedaddress)
-    {
-        CmdWebhookRecieve(recievedaddress);
-    }
-
-    [Command]
-    public void CmdWebhookRecieve(string recievedaddress)
-    {
-
-            address = recievedaddress;
-            Debug.Log("Connected:");
-            Debug.Log(recievedaddress);
-            plyruicntrl.Cmdupdateui();
-
+                DisableStartUiblnkingText.enabled = false;
+        }
     }
 
     [ClientRpc]
@@ -57,34 +42,35 @@ public class JavascriptHook : NetworkBehaviour
     {
         if (this.isLocalPlayer)
         {
-          //  if (spawned == !true)
-          //  {
-                if (address != "0x") //check if wallet is connected /came through webhookspawn>^ //enable in live environment.
+            if (spawned == !true)
+            {
+                if (address != null) //check if wallet is connected /came through webhookspawn>^ //enable in live environment.
                 {
                     playerspawn.Spawn(address);
                     spawned = true;
                 }
-            //}
+                Debug.Log("NULL Adress ID");
+            }
         }
         playerspawn.AfterQueOverFn();
 
     }
 
 
-    //below for debugging only. 
-    void Update()
-    {
-        if (this.isLocalPlayer)
+        //below for debugging only. 
+        void Update()
         {
-         //   if (spawned == !true)
-           // {
-                if (Input.GetKeyDown(KeyCode.S))
+            if (this.isLocalPlayer)
+            {
+                if (spawned == !true)
                 {
-                    playerspawn.Spawn(address);
-                    spawned = true;
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        playerspawn.Spawn(address);
+                        spawned = true;
+                    }
                 }
-           // }
-        }
+            }  
 
-    }
-}
+        }
+}   

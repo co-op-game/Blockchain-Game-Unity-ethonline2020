@@ -22,7 +22,7 @@ public class PlayerSpawn : NetworkBehaviour
 
     public void Awake()
     {
-        spawnPosition = new Vector3(UnityEngine.Random.Range(-24.0f, 17.0f), 5.0f, UnityEngine.Random.Range(-20.0f, 10.0f));
+        spawnPosition = new Vector3(UnityEngine.Random.Range(-8.0f, 8.0f), 0.0f, UnityEngine.Random.Range(-8.0f, 8.0f));
         spawnRotation = Quaternion.Euler(0.0f, UnityEngine.Random.Range(0.0f, 180.0f), 0);
        
     }

@@ -8,8 +8,6 @@ public class Player_Abilities : NetworkBehaviour
     [SyncVar(hook = "OnAddressChange")] public string address = "not_set";
     [SyncVar(hook = "Onvaluechange")] public float abilityvalue = 0;
 
-    public Health health;
-
     private void Start()
     {
         address = this.name;
@@ -22,7 +20,7 @@ public class Player_Abilities : NetworkBehaviour
 
     void Onvaluechange(float abilityvalue)
     {
-        health.OnChangearmor(abilityvalue);
+        Debug.Log(abilityvalue);
     }
 
 }
