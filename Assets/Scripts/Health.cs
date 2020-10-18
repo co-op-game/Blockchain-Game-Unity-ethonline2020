@@ -6,7 +6,7 @@ public class Health : NetworkBehaviour
 
     public const int maxHeath = 100;
     [SyncVar(hook = "OnChangeHealth")] public int currentHealth = maxHeath;
-    [SyncVar(hook = "OnChangearmor")] float armor;
+    [SyncVar] float armor;
 
     public RectTransform healthBar;
     public RectTransform armorBar;
@@ -22,6 +22,7 @@ public class Health : NetworkBehaviour
             spawnPoints = FindObjectsOfType<NetworkStartPosition>();
         }
         armor = player_abilities.abilityvalue;
+        OnChangearmor(armor);
     }
 
     public void TakeDamage(int amount)
@@ -35,7 +36,7 @@ public class Health : NetworkBehaviour
         if(player_abilities.abilityvalue > 0)
         {
             armor = player_abilities.abilityvalue;
-            armor -= amount/2;
+            armor -= amount/5; 
             player_abilities.abilityvalue = armor;
         }
 
@@ -59,12 +60,12 @@ public class Health : NetworkBehaviour
                 }
              OnChangeHealth(currentHealth);
          }
-        OnChangearmor(armor);
+       // OnChangearmor(armor);
     }
 
-    void OnChangearmor(float armor)
+    public void OnChangearmor(float armor)
     {
-        armorBar.sizeDelta = new Vector2(armor * 1, healthBar.sizeDelta.y);
+        armorBar.sizeDelta = new Vector2(armor * 2, healthBar.sizeDelta.y);
     }
 
     void OnChangeHealth(int health)
