@@ -9,7 +9,14 @@ public class ClientCall : NetworkBehaviour
 {
     //public CustomNetworkManager netowkrlobbym;
     public GameObject EndGameCanvas;
+<<<<<<< HEAD
     public GameObject EndGameCanvas2;
+=======
+<<<<<<< HEAD
+    public GameObject EndGameCanvas2;
+=======
+>>>>>>> 8fde4476ec600ded30429aa4ba985868b0f593ff
+>>>>>>> 1050d734d376411650fc1e5e674e59e685b65807
     public Text winnername;
     public Text prizepool;
     public Text przepoolendgame;
@@ -24,6 +31,10 @@ public class ClientCall : NetworkBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 1050d734d376411650fc1e5e674e59e685b65807
 
     [ClientRpc]
     public void RpcZeroPlayers()
@@ -33,6 +44,11 @@ public class ClientCall : NetworkBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 8fde4476ec600ded30429aa4ba985868b0f593ff
+>>>>>>> 1050d734d376411650fc1e5e674e59e685b65807
     [ClientRpc]
     public void Rpclobbyreturn()
     {   
