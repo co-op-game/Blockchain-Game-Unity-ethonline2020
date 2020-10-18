@@ -23,21 +23,21 @@ public class EtherTransferCoroutinesUnityWebRequest : MonoBehaviour {
     public string TransactionHash = "";
     public decimal BalanceAddressTo = 0m;
 
-    public InputField InputUrl;
-    public InputField InputPrivateKey;
-    public InputField InputAddressTo;
-    public InputField InputAmount;
+   // public InputField InputUrl;
+    //public InputField InputPrivateKey;
+    //public InputField InputAddressTo;
+    //public InputField InputAmount;
 
-    public InputField ResultBalanceAddressTo;
-    public InputField ResultTxnHash;
+    //public InputField ResultBalanceAddressTo;
+    //public InputField ResultTxnHash;
 
     // Use this for initialization
     void Start () {
 
-        InputUrl.text = Url;
-        InputPrivateKey.text = PrivateKey;
-        InputAddressTo.text = AddressTo;
-        InputAmount.text = Amount.ToString();
+      //  InputUrl.text = Url;
+       // InputPrivateKey.text = PrivateKey;
+        //InputAddressTo.text = AddressTo;
+        //InputAmount.text = Amount.ToString();
 
     }
 
@@ -50,9 +50,9 @@ public class EtherTransferCoroutinesUnityWebRequest : MonoBehaviour {
     //Sample of new features / requests
     public IEnumerator TransferEther(decimal Amount, string AddressTo)
     {
-        Url = InputUrl.text;
-        PrivateKey = InputPrivateKey.text;
-        AddressTo = InputAddressTo.text;
+        //Url = InputUrl.text;
+        //PrivateKey = InputPrivateKey.text;
+        //AddressTo = InputAddressTo.text;
         //Amount = System.Decimal.Parse(InputAmount.text);
          
 
@@ -69,7 +69,7 @@ public class EtherTransferCoroutinesUnityWebRequest : MonoBehaviour {
         }
 
         TransactionHash = ethTransfer.Result;
-        ResultTxnHash.text = TransactionHash;
+        //ResultTxnHash.text = TransactionHash;
         Debug.Log("Transfer transaction hash:" + TransactionHash);
 
         //create a poll to get the receipt when mined
@@ -83,7 +83,7 @@ public class EtherTransferCoroutinesUnityWebRequest : MonoBehaviour {
         yield return balanceRequest.SendRequest(receivingAddress, BlockParameter.CreateLatest());
 
         BalanceAddressTo = UnitConversion.Convert.FromWei(balanceRequest.Result.Value);
-        ResultBalanceAddressTo.text = BalanceAddressTo.ToString();
+        //ResultBalanceAddressTo.text = BalanceAddressTo.ToString();
 
         Debug.Log("Balance of account:" + BalanceAddressTo);
     }

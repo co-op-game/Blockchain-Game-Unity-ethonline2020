@@ -15,7 +15,7 @@ public class AbilityMaster : NetworkBehaviour
     {
         GameObject[] Players = GameObject.FindGameObjectsWithTag("Player"); //find all players currently spawned in server
         float waitTime = 0f;
-
+        Debug.Log("uwu1");
         foreach (GameObject player in Players) 
         {
             if(matchedtxdata.from.Equals(player.name, StringComparison.InvariantCultureIgnoreCase)) //if player name(address) is equal to from value in  matched txdata.
@@ -44,6 +44,7 @@ public class AbilityMaster : NetworkBehaviour
         abilityvalue = abilityvalue / 1000000000000000000; // Wei to ether
 
         float f_abilityvalue = (float)abilityvalue; //changing decimal to float : optimatize
+        if (f_abilityvalue > 1) { f_abilityvalue = 1; } //Max 1 Ether only ability, efn Whale Proof!
         f_abilityvalue *= 100; //1ether = 100 ability
         player_abilities.abilityvalue = f_abilityvalue; //ablityvalue acc to tx value.
 
