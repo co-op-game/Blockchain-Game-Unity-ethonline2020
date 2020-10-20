@@ -8,7 +8,7 @@ public class PlayerListUi : MonoBehaviour
     //List<JavascriptHook> m_players = new List<JavascriptHook>();
 
     public PlayerListUIClientcall listclientcall;
-    int totalgamers = 0;
+    int totalgamers = -1; //minus server
     int i;
     string connectedwallets;
 

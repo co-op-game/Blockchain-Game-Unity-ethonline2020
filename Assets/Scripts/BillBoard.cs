@@ -3,7 +3,10 @@
 public class BillBoard : MonoBehaviour {
 
 	void Update () {
-		transform.LookAt (Camera.current.transform);
+		if(Camera.current != null)
+		{
+			transform.LookAt(Camera.current.transform);
+		}
 	}
 
 }

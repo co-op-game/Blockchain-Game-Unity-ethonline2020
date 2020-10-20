@@ -72,6 +72,7 @@ public class JavascriptHook : NetworkBehaviour
 
 
     //below for debugging only. 
+    /*
     void Update()
     {
         if (this.isLocalPlayer)
@@ -86,5 +87,6 @@ public class JavascriptHook : NetworkBehaviour
            // }
         }
 
-    }
+    } 
+    */
 }

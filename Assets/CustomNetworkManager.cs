@@ -13,6 +13,7 @@ public class CustomNetworkManager : NetworkManager
     public PlayerListUi playerlistui;
     public QueUIControl quicntrl;
 
+
     public override void OnClientConnect(NetworkConnection conn)
     {
         if (!clientLoadedScene)
