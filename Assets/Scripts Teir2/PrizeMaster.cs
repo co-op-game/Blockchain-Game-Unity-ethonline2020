@@ -32,7 +32,7 @@ public class PrizeMaster : NetworkBehaviour
        //debug SendAbiltyFunds("0x025ababef744c64a679f9b29d9c3a94f3e53d4e6");
     }
 
-    [Command]
+ //   [Command]
     public void CmdSendAbiltyFunds(string winnername)
     {
         if (!isServer)
